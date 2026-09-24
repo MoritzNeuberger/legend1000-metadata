@@ -1,0 +1,8 @@
+V99999Z:
+  name: V99999Z
+  system: geds
+  location:
+    string: 1
+    position: 1
+  daq:
+    rawid: 1
