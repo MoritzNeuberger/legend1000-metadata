@@ -6,3 +6,13 @@ V99999Z:
     position: 1
   daq:
     rawid: 1
+
+S9999Z:
+  name: S9999Z
+  system: spms
+  location:
+    barrel: 1
+    fiber: S9999
+    position: top
+  daq:
+    rawid: 5000

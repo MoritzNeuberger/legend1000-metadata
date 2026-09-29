@@ -6,3 +6,7 @@ V99999Z:
       low_aoe: valid
       high_aoe: valid
       lq: valid
+
+S9999Z:
+  usability: "on"
+  processable: true
