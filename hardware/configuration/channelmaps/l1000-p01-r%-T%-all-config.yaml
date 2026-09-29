@@ -7,8 +7,8 @@ V99999Z:
   daq:
     rawid: 1
 
-S9999T:
-  name: S9999T
+S9999Z:
+  name: S9999Z
   system: spms
   location:
     barrel: 1
