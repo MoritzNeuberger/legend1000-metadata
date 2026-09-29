@@ -1,0 +1,13 @@
+name: S9999T
+wafer:
+  id: SiPM99W99
+  row:
+    - 1
+pulse_shape: 1
+cable_length_in_cm: 20
+characterization:
+  recommended_voltage_in_V: 24.0
+  breakdown_voltage_in_V: 21.5
+  dark_count_rate_in_Hz: 2.88
+  crosstalk_prob: 0.26
+  afterpulsing_prob: 0.12
