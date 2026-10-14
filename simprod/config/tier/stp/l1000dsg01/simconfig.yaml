@@ -1,52 +1,38 @@
-# Simulations of the L1000 reference design: the double-beta decay signals,
-# 42K from the liquid argon, and the 232Th and 238U chains in the parts of the
-# CDR background model (TABLE XVII). For the 232Th and 238U simulations, the
-# comment above each entry names the CDR row.
-# Not simulated: Connectors (Various) (not in the geometry), Cryostat (Steel).
-# Primaries are pilot values: tune them after a first run.
-
-# 76Ge double-beta decay
-# ----------------------
-
 hpge_icpc_bulk_2vbb:
   template: $_/templates/default.mac
   generator: ~defines:2vbb
   confinement: ~volumes.bulk:V\d+Z
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 7_000_000
+  number_of_jobs: 2
 
 hpge_icpc_bulk_0vbb:
   template: $_/templates/default.mac
   generator: ~defines:0vbb
   confinement: ~volumes.bulk:V\d+Z
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 5_000_000
+  number_of_jobs: 2
 
-# 42K from the 42Ar in the liquid argon
-# -------------------------------------
-
-# 42K ions collected on the HPGe surfaces. The step size is limited to resolve
-# the electrons in the n+ dead layer.
-hpge_ic_nplus_surface_K42: &K42_surface
+hpge_nplus_surface_K42: &K42_surface
   template: $_/templates/step_limits.mac
   generator: ~defines:K42
-  confinement: ~vertices:hpge_ic_nplus_surface
+  confinement: ~vertices:hpge_nplus_surface
   macro_substitutions:
     STEP_SIZE: 20 um
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 650_000
+  number_of_jobs: 16
 
-hpge_ic_pplus_surface_K42:
+hpge_pplus_surface_K42:
   <<: *K42_surface
-  confinement: ~vertices:hpge_ic_pplus_surface
+  confinement: ~vertices:hpge_pplus_surface
+  primaries_per_job: 300_000
+  number_of_jobs: 34
 
-# 42K homogeneous in the underground liquid argon around the array
 liquid_argon_K42:
   template: $_/templates/default.mac
   generator: ~defines:K42
   confinement: ~defines:lar_closer_to_array
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 2_000_000
+  number_of_jobs: 5
 
 # 232Th chain: Pb212 -> Pb208 (228Th sub-chain)
 # ---------------------------------------------
@@ -56,76 +42,92 @@ hpge_support_copper_Pb212_to_Pb208: &Th228
   template: $_/templates/default.mac
   generator: ~defines:Pb212_to_Pb208
   confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 450_000
+  number_of_jobs: 23
 
 # CDR: Detector Mount (Ultem)
 ultem_insulators_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+  primaries_per_job: 600_000
+  number_of_jobs: 17
 
 # CDR: HV Connector (Ultem), FE Mount (Ultem)
 # also proxy for: HV Connector (Ph-Br), FE Mount (Ph-Br)
 ultem_clamps_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:hpge_assembly_clamp_.*_ultem_.*
+  primaries_per_job: 600_000
+  number_of_jobs: 17
 
 # CDR: Cabling - HV & Signal
 cables_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:hpge_cable_.*
+  primaries_per_job: 400_000
+  number_of_jobs: 25
 
 # CDR: Front End ASIC
 front_end_electronics_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:hpge_assembly_asic_.*
+  primaries_per_job: 950_000
+  number_of_jobs: 11
 
 # CDR: PEN Plates (PEN)
 pen_plates_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:hpge_assembly_plate_pen_.*
+  primaries_per_job: 400_000
+  number_of_jobs: 25
 
 # CDR: Optical Fibers
 fibers_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:fiber_.*
+  primaries_per_job: 150_000
+  number_of_jobs: 106
 
 # CDR: SiPMs
 sipm_arrays_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:S\d+[BT]
+  primaries_per_job: 950_000
+  number_of_jobs: 11
 
-# CDR: Reflectors (Tetratex/TPB), sampled in the Tetratex foil (the 1 um TPB
-# coating is too thin to sample). Both WLSRs: inside and outside the
-# re-entrance tube, as the Inner and Outer shrouds in the MaGe CDR geometry.
+# CDR: Reflectors (Tetratex/TPB)
 wls_reflector_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:(underground|atmospheric)_wlsr_tetratex
-  primaries_per_job: 1_000_000
+  primaries_per_job: 250_000
+  number_of_jobs: 40
 
 # CDR: RE Vessel (EFCu)
 reentrance_tube_efcu_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:reentrance_tube_copper
-  primaries_per_job: 1_000_000
+  primaries_per_job: 450_000
 
 # CDR: RE Vessel (Comm. Cu)
 reentrance_tube_ofhc_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:reentrance_tube_layer_copper_ofhc
-  primaries_per_job: 1_000_000
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
 # not in CDR: use the Cryostat (Steel) activity per kg
 reentrance_tube_steel_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:reentrance_tube_layer_steel_316L
-  primaries_per_job: 1_000_000
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
 # CDR: Neutron Moderator (PMMA)
 neutron_moderator_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:neutron_moderator_pmma
-  primaries_per_job: 1_000_000
+  primaries_per_job: 3_000_000
+  number_of_jobs: 4
 
 # 232Th chain: Ra228 -> Ac228
 # ---------------------------
@@ -135,76 +137,93 @@ hpge_support_copper_Ra228_to_Ac228: &Ac228
   template: $_/templates/default.mac
   generator: ~defines:Ra228_to_Ac228
   confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 750_000
+  number_of_jobs: 14
 
 # CDR: Detector Mount (Ultem)
 ultem_insulators_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+  primaries_per_job: 950_000
+  number_of_jobs: 11
 
 # CDR: HV Connector (Ultem), FE Mount (Ultem)
 # also proxy for: HV Connector (Ph-Br), FE Mount (Ph-Br)
 ultem_clamps_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:hpge_assembly_clamp_.*_ultem_.*
+  primaries_per_job: 1_000_000
+  number_of_jobs: 10
 
 # CDR: Cabling - HV & Signal
 cables_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:hpge_cable_.*
+  primaries_per_job: 500_000
+  number_of_jobs: 20
 
 # CDR: Front End ASIC
 front_end_electronics_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:hpge_assembly_asic_.*
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
 # CDR: PEN Plates (PEN)
 pen_plates_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:hpge_assembly_plate_pen_.*
+  primaries_per_job: 550_000
+  number_of_jobs: 19
 
 # CDR: Optical Fibers
 fibers_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:fiber_.*
+  primaries_per_job: 100_000
+  number_of_jobs: 158
 
 # CDR: SiPMs
 sipm_arrays_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:S\d+[BT]
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
-# CDR: Reflectors (Tetratex/TPB), sampled in the Tetratex foil (the 1 um TPB
-# coating is too thin to sample). Both WLSRs: inside and outside the
-# re-entrance tube, as the Inner and Outer shrouds in the MaGe CDR geometry.
+# CDR: Reflectors (Tetratex/TPB)
 wls_reflector_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:(underground|atmospheric)_wlsr_tetratex
-  primaries_per_job: 1_000_000
+  primaries_per_job: 200_000
+  number_of_jobs: 50
 
 # CDR: RE Vessel (EFCu)
 reentrance_tube_efcu_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:reentrance_tube_copper
-  primaries_per_job: 1_000_000
+  primaries_per_job: 400_000
+  number_of_jobs: 25
 
 # CDR: RE Vessel (Comm. Cu)
 reentrance_tube_ofhc_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:reentrance_tube_layer_copper_ofhc
-  primaries_per_job: 1_000_000
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
 # not in CDR: use the Cryostat (Steel) activity per kg
 reentrance_tube_steel_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:reentrance_tube_layer_steel_316L
-  primaries_per_job: 1_000_000
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
 # CDR: Neutron Moderator (PMMA)
 neutron_moderator_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:neutron_moderator_pmma
-  primaries_per_job: 1_000_000
+  primaries_per_job: 3_500_000
+  number_of_jobs: 3
 
 # 238U chain: Pb214 -> Po214 (226Ra sub-chain)
 # --------------------------------------------
@@ -214,73 +233,89 @@ hpge_support_copper_Pb214_to_Po214: &U238
   template: $_/templates/default.mac
   generator: ~defines:Pb214_to_Po214
   confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
-  primaries_per_job: 100_000
-  number_of_jobs: 1
+  primaries_per_job: 350_000
+  number_of_jobs: 29
 
 # CDR: Detector Mount (Ultem)
 ultem_insulators_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+  primaries_per_job: 600_000
+  number_of_jobs: 17
 
 # CDR: HV Connector (Ultem), FE Mount (Ultem)
 # also proxy for: HV Connector (Ph-Br), FE Mount (Ph-Br)
 ultem_clamps_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:hpge_assembly_clamp_.*_ultem_.*
+  primaries_per_job: 600_000
+  number_of_jobs: 17
 
 # CDR: Cabling - HV & Signal
 cables_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:hpge_cable_.*
+  primaries_per_job: 350_000
 
 # CDR: Front End ASIC
 front_end_electronics_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:hpge_assembly_asic_.*
+  primaries_per_job: 750_000
+  number_of_jobs: 14
 
 # CDR: PEN Plates (PEN)
 pen_plates_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:hpge_assembly_plate_pen_.*
+  primaries_per_job: 450_000
+  number_of_jobs: 23
 
 # CDR: Optical Fibers
 fibers_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:fiber_.*
+  primaries_per_job: 100_000
+  number_of_jobs: 256
 
 # CDR: SiPMs
 sipm_arrays_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:S\d+[BT]
+  primaries_per_job: 650_000
+  number_of_jobs: 16
 
-# CDR: Reflectors (Tetratex/TPB), sampled in the Tetratex foil (the 1 um TPB
-# coating is too thin to sample). Both WLSRs: inside and outside the
-# re-entrance tube, as the Inner and Outer shrouds in the MaGe CDR geometry.
+# CDR: Reflectors (Tetratex/TPB),
 wls_reflector_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:(underground|atmospheric)_wlsr_tetratex
-  primaries_per_job: 1_000_000
+  primaries_per_job: 200_000
+  number_of_jobs: 50
 
 # CDR: RE Vessel (EFCu)
 reentrance_tube_efcu_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:reentrance_tube_copper
-  primaries_per_job: 1_000_000
+  primaries_per_job: 400_000
+  number_of_jobs: 25
 
 # CDR: RE Vessel (Comm. Cu)
 reentrance_tube_ofhc_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:reentrance_tube_layer_copper_ofhc
-  primaries_per_job: 1_000_000
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
 
 # not in CDR: use the Cryostat (Steel) activity per kg
 reentrance_tube_steel_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:reentrance_tube_layer_steel_316L
   primaries_per_job: 1_000_000
+  number_of_jobs: 10
 
 # CDR: Neutron Moderator (PMMA)
 neutron_moderator_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:neutron_moderator_pmma
-  primaries_per_job: 1_000_000
+  primaries_per_job: 2_000_000
+  number_of_jobs: 5

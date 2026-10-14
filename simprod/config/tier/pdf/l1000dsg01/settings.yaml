@@ -1,4 +1,4 @@
 buffer_len: 500*MB
 
-# the pdf tier always adds a group 'all' matching every detector
-detector_groups: {}
+detector_groups: 
+  all: ".*"
