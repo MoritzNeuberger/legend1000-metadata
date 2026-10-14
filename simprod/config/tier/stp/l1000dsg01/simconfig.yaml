@@ -1,6 +1,235 @@
-ultem_insulators_Pb214_to_Po214:
+# 232Th and 238U simulations of the parts in the L1000 CDR background model
+# (TABLE XVII). The comment above each entry names the CDR row.
+# Not simulated: Connectors (Various) (not in the geometry), Cryostat (Steel).
+# Primaries are pilot values: tune them after a first run.
+
+# 232Th chain: Pb212 -> Pb208 (228Th sub-chain)
+# ---------------------------------------------
+
+# CDR: Detector Mount (EFCu)
+hpge_support_copper_Pb212_to_Pb208: &Th228
   template: $_/template.mac
-  generator: ~defines:Pb214_to_Po214
-  confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+  generator: ~defines:Pb212_to_Pb208
+  confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
   primaries_per_job: 100_000
   number_of_jobs: 1
+
+# CDR: Detector Mount (Ultem)
+ultem_insulators_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+
+# CDR: HV Connector (Ultem), FE Mount (Ultem)
+# also proxy for: HV Connector (Ph-Br), FE Mount (Ph-Br)
+ultem_clamps_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:hpge_assembly_clamp_.*_ultem_.*
+
+# CDR: Cabling - HV & Signal
+cables_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:hpge_cable_.*
+
+# CDR: Front End ASIC
+front_end_electronics_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:hpge_assembly_asic_.*
+
+# CDR: PEN Plates (PEN)
+pen_plates_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:hpge_assembly_plate_pen_.*
+
+# CDR: Optical Fibers
+fibers_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:fiber_.*
+
+# CDR: SiPMs
+sipm_arrays_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:S\d+[BT]
+
+# CDR: Reflectors (Tetratex/TPB)
+wls_reflector_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:underground_wlsr_.*
+  primaries_per_job: 1_000_000
+
+# CDR: RE Vessel (EFCu)
+reentrance_tube_efcu_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:reentrance_tube_copper
+  primaries_per_job: 1_000_000
+
+# CDR: RE Vessel (Comm. Cu)
+reentrance_tube_ofhc_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:reentrance_tube_layer_copper_ofhc
+  primaries_per_job: 1_000_000
+
+# not in CDR: use the Cryostat (Steel) activity per kg
+reentrance_tube_steel_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:reentrance_tube_layer_steel_316L
+  primaries_per_job: 1_000_000
+
+# CDR: Neutron Moderator (PMMA)
+neutron_moderator_Pb212_to_Pb208:
+  <<: *Th228
+  confinement: ~volumes.bulk:neutron_moderator_pmma
+  primaries_per_job: 1_000_000
+
+# 232Th chain: Ra228 -> Ac228
+# ---------------------------
+
+# CDR: Detector Mount (EFCu)
+hpge_support_copper_Ra228_to_Ac228: &Ac228
+  template: $_/template.mac
+  generator: ~defines:Ra228_to_Ac228
+  confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
+  primaries_per_job: 100_000
+  number_of_jobs: 1
+
+# CDR: Detector Mount (Ultem)
+ultem_insulators_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+
+# CDR: HV Connector (Ultem), FE Mount (Ultem)
+# also proxy for: HV Connector (Ph-Br), FE Mount (Ph-Br)
+ultem_clamps_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:hpge_assembly_clamp_.*_ultem_.*
+
+# CDR: Cabling - HV & Signal
+cables_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:hpge_cable_.*
+
+# CDR: Front End ASIC
+front_end_electronics_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:hpge_assembly_asic_.*
+
+# CDR: PEN Plates (PEN)
+pen_plates_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:hpge_assembly_plate_pen_.*
+
+# CDR: Optical Fibers
+fibers_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:fiber_.*
+
+# CDR: SiPMs
+sipm_arrays_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:S\d+[BT]
+
+# CDR: Reflectors (Tetratex/TPB)
+wls_reflector_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:underground_wlsr_.*
+  primaries_per_job: 1_000_000
+
+# CDR: RE Vessel (EFCu)
+reentrance_tube_efcu_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:reentrance_tube_copper
+  primaries_per_job: 1_000_000
+
+# CDR: RE Vessel (Comm. Cu)
+reentrance_tube_ofhc_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:reentrance_tube_layer_copper_ofhc
+  primaries_per_job: 1_000_000
+
+# not in CDR: use the Cryostat (Steel) activity per kg
+reentrance_tube_steel_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:reentrance_tube_layer_steel_316L
+  primaries_per_job: 1_000_000
+
+# CDR: Neutron Moderator (PMMA)
+neutron_moderator_Ra228_to_Ac228:
+  <<: *Ac228
+  confinement: ~volumes.bulk:neutron_moderator_pmma
+  primaries_per_job: 1_000_000
+
+# 238U chain: Pb214 -> Po214 (226Ra sub-chain)
+# --------------------------------------------
+
+# CDR: Detector Mount (EFCu)
+hpge_support_copper_Pb214_to_Po214: &U238
+  template: $_/template.mac
+  generator: ~defines:Pb214_to_Po214
+  confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
+  primaries_per_job: 100_000
+  number_of_jobs: 1
+
+# CDR: Detector Mount (Ultem)
+ultem_insulators_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:hpge_assembly_insulator_ultem_.*
+
+# CDR: HV Connector (Ultem), FE Mount (Ultem)
+# also proxy for: HV Connector (Ph-Br), FE Mount (Ph-Br)
+ultem_clamps_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:hpge_assembly_clamp_.*_ultem_.*
+
+# CDR: Cabling - HV & Signal
+cables_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:hpge_cable_.*
+
+# CDR: Front End ASIC
+front_end_electronics_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:hpge_assembly_asic_.*
+
+# CDR: PEN Plates (PEN)
+pen_plates_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:hpge_assembly_plate_pen_.*
+
+# CDR: Optical Fibers
+fibers_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:fiber_.*
+
+# CDR: SiPMs
+sipm_arrays_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:S\d+[BT]
+
+# CDR: Reflectors (Tetratex/TPB)
+wls_reflector_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:underground_wlsr_.*
+  primaries_per_job: 1_000_000
+
+# CDR: RE Vessel (EFCu)
+reentrance_tube_efcu_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:reentrance_tube_copper
+  primaries_per_job: 1_000_000
+
+# CDR: RE Vessel (Comm. Cu)
+reentrance_tube_ofhc_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:reentrance_tube_layer_copper_ofhc
+  primaries_per_job: 1_000_000
+
+# not in CDR: use the Cryostat (Steel) activity per kg
+reentrance_tube_steel_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:reentrance_tube_layer_steel_316L
+  primaries_per_job: 1_000_000
+
+# CDR: Neutron Moderator (PMMA)
+neutron_moderator_Pb214_to_Po214:
+  <<: *U238
+  confinement: ~volumes.bulk:neutron_moderator_pmma
+  primaries_per_job: 1_000_000
