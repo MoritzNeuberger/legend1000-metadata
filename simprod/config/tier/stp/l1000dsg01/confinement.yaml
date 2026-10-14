@@ -1,0 +1,15 @@
+# underground LAr around the HPGe array: the HPGes span z = -0.89 to +0.09 m
+# and r < 0.77 m, the LAr fills r < 1 m from z = -1.26 m up into the neck of
+# the re-entrance tube. The cylinder keeps the full radius and ends 1 m above
+# the top HPGe.
+lar_closer_to_array:
+  - /RMG/Generator/Confine Volume
+  - /RMG/Generator/Confinement/SamplingMode IntersectPhysicalWithGeometrical
+  - /RMG/Generator/Confinement/Physical/AddVolume liquid_argon_underground
+  - /RMG/Generator/Confinement/Geometrical/AddSolid Cylinder
+  - /RMG/Generator/Confinement/Geometrical/CenterPositionX 0 m
+  - /RMG/Generator/Confinement/Geometrical/CenterPositionY 0 m
+  - /RMG/Generator/Confinement/Geometrical/CenterPositionZ -0.1 m
+  - /RMG/Generator/Confinement/Geometrical/Cylinder/InnerRadius 0 m
+  - /RMG/Generator/Confinement/Geometrical/Cylinder/OuterRadius 1 m
+  - /RMG/Generator/Confinement/Geometrical/Cylinder/Height 2.4 m

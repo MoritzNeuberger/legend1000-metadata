@@ -1,14 +1,59 @@
-# 232Th and 238U simulations of the parts in the L1000 CDR background model
-# (TABLE XVII). The comment above each entry names the CDR row.
+# Simulations of the L1000 reference design: the double-beta decay signals,
+# 42K from the liquid argon, and the 232Th and 238U chains in the parts of the
+# CDR background model (TABLE XVII). For the 232Th and 238U simulations, the
+# comment above each entry names the CDR row.
 # Not simulated: Connectors (Various) (not in the geometry), Cryostat (Steel).
 # Primaries are pilot values: tune them after a first run.
+
+# 76Ge double-beta decay
+# ----------------------
+
+hpge_icpc_bulk_2vbb:
+  template: $_/templates/default.mac
+  generator: ~defines:2vbb
+  confinement: ~volumes.bulk:V\d+Z
+  primaries_per_job: 100_000
+  number_of_jobs: 1
+
+hpge_icpc_bulk_0vbb:
+  template: $_/templates/default.mac
+  generator: ~defines:0vbb
+  confinement: ~volumes.bulk:V\d+Z
+  primaries_per_job: 100_000
+  number_of_jobs: 1
+
+# 42K from the 42Ar in the liquid argon
+# -------------------------------------
+
+# 42K ions collected on the HPGe surfaces. The step size is limited to resolve
+# the electrons in the n+ dead layer.
+hpge_ic_nplus_surface_K42: &K42_surface
+  template: $_/templates/step_limits.mac
+  generator: ~defines:K42
+  confinement: ~vertices:hpge_ic_nplus_surface
+  macro_substitutions:
+    STEP_SIZE: 20 um
+  primaries_per_job: 100_000
+  number_of_jobs: 1
+
+hpge_ic_pplus_surface_K42:
+  <<: *K42_surface
+  confinement: ~vertices:hpge_ic_pplus_surface
+
+# 42K homogeneous in the underground liquid argon around the array
+liquid_argon_K42:
+  template: $_/templates/default.mac
+  generator: ~defines:K42
+  confinement: ~defines:lar_closer_to_array
+  primaries_per_job: 100_000
+  number_of_jobs: 1
 
 # 232Th chain: Pb212 -> Pb208 (228Th sub-chain)
 # ---------------------------------------------
 
 # CDR: Detector Mount (EFCu)
 hpge_support_copper_Pb212_to_Pb208: &Th228
-  template: $_/template.mac
+  template: $_/templates/default.mac
   generator: ~defines:Pb212_to_Pb208
   confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
   primaries_per_job: 100_000
@@ -50,10 +95,12 @@ sipm_arrays_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:S\d+[BT]
 
-# CDR: Reflectors (Tetratex/TPB)
+# CDR: Reflectors (Tetratex/TPB), sampled in the Tetratex foil (the 1 um TPB
+# coating is too thin to sample). Both WLSRs: inside and outside the
+# re-entrance tube, as the Inner and Outer shrouds in the MaGe CDR geometry.
 wls_reflector_Pb212_to_Pb208:
   <<: *Th228
-  confinement: ~volumes.bulk:underground_wlsr_.*
+  confinement: ~volumes.bulk:(underground|atmospheric)_wlsr_tetratex
   primaries_per_job: 1_000_000
 
 # CDR: RE Vessel (EFCu)
@@ -85,7 +132,7 @@ neutron_moderator_Pb212_to_Pb208:
 
 # CDR: Detector Mount (EFCu)
 hpge_support_copper_Ra228_to_Ac228: &Ac228
-  template: $_/template.mac
+  template: $_/templates/default.mac
   generator: ~defines:Ra228_to_Ac228
   confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
   primaries_per_job: 100_000
@@ -127,10 +174,12 @@ sipm_arrays_Ra228_to_Ac228:
   <<: *Ac228
   confinement: ~volumes.bulk:S\d+[BT]
 
-# CDR: Reflectors (Tetratex/TPB)
+# CDR: Reflectors (Tetratex/TPB), sampled in the Tetratex foil (the 1 um TPB
+# coating is too thin to sample). Both WLSRs: inside and outside the
+# re-entrance tube, as the Inner and Outer shrouds in the MaGe CDR geometry.
 wls_reflector_Ra228_to_Ac228:
   <<: *Ac228
-  confinement: ~volumes.bulk:underground_wlsr_.*
+  confinement: ~volumes.bulk:(underground|atmospheric)_wlsr_tetratex
   primaries_per_job: 1_000_000
 
 # CDR: RE Vessel (EFCu)
@@ -162,7 +211,7 @@ neutron_moderator_Ra228_to_Ac228:
 
 # CDR: Detector Mount (EFCu)
 hpge_support_copper_Pb214_to_Po214: &U238
-  template: $_/template.mac
+  template: $_/templates/default.mac
   generator: ~defines:Pb214_to_Po214
   confinement: ~volumes.bulk:hpge_string_support_.*_copper_.*
   primaries_per_job: 100_000
@@ -204,10 +253,12 @@ sipm_arrays_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:S\d+[BT]
 
-# CDR: Reflectors (Tetratex/TPB)
+# CDR: Reflectors (Tetratex/TPB), sampled in the Tetratex foil (the 1 um TPB
+# coating is too thin to sample). Both WLSRs: inside and outside the
+# re-entrance tube, as the Inner and Outer shrouds in the MaGe CDR geometry.
 wls_reflector_Pb214_to_Po214:
   <<: *U238
-  confinement: ~volumes.bulk:underground_wlsr_.*
+  confinement: ~volumes.bulk:(underground|atmospheric)_wlsr_tetratex
   primaries_per_job: 1_000_000
 
 # CDR: RE Vessel (EFCu)
