@@ -34,6 +34,27 @@ liquid_argon_K42:
   primaries_per_job: 2_000_000
   number_of_jobs: 5
 
+hpge_icpc_bulk_Ge68:
+  template: $_/templates/default.mac
+  generator: ~defines:Ge68
+  confinement: ~volumes.bulk:V\d+Z
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
+
+hpge_icpc_bulk_Co60:
+  template: $_/templates/default.mac
+  generator: ~defines:Co60
+  confinement: ~volumes.bulk:V\d+Z
+  primaries_per_job: 1_500_000
+  number_of_jobs: 7
+
+liquid_argon_atmospheric_Ar39:
+  template: $_/templates/underground_lar_edep.mac
+  generator: ~defines:Ar39
+  confinement: ~defines:lar_atmospheric
+  primaries_per_job: 18_000_000
+  number_of_jobs: 8
+
 # 232Th chain: Pb212 -> Pb208 (228Th sub-chain)
 # ---------------------------------------------
 
