@@ -1,4 +1,5 @@
 dead_layer_fraction: 0.5
+store_surface_steps: false
 buffer_len: 500*MB
 simulate_psd_with_psl: true
 simulate_psd: true
