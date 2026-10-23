@@ -128,6 +128,7 @@ reentrance_tube_efcu_Pb212_to_Pb208:
   <<: *Th228
   confinement: ~volumes.bulk:reentrance_tube_copper
   primaries_per_job: 450_000
+  number_of_jobs: 23
 
 # CDR: RE Vessel (Comm. Cu)
 reentrance_tube_ofhc_Pb212_to_Pb208:
@@ -277,6 +278,7 @@ cables_Pb214_to_Po214:
   <<: *U238
   confinement: ~volumes.bulk:hpge_cable_.*
   primaries_per_job: 350_000
+  number_of_jobs: 29
 
 # CDR: Front End ASIC
 front_end_electronics_Pb214_to_Po214:
